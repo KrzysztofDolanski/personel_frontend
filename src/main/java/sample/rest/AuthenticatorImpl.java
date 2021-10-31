@@ -1,6 +1,7 @@
 package sample.rest;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import sample.dto.OperatorAuthenticationResultDto;
 import sample.dto.OperatorCredentialsDto;
