@@ -18,7 +18,7 @@ public class PopupFactory {
         VBox pane = new VBox();
         pane.setStyle(waitingPopupStyle());
         pane.setAlignment(Pos.CENTER);
-        pane.setSpacing(8.5);
+        pane.setSpacing(10);
         stage.setScene(new Scene(pane, 200, 100));
         Label label = new Label(s);
         label.setStyle(waitingLabelStyle());
