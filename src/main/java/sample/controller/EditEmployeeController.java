@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.dto.EmployeeDto;
 import sample.factory.PopupFactory;
@@ -36,9 +35,6 @@ public class EditEmployeeController implements Initializable {
     private TextField salaryTextField;
 
     @FXML
-    private GridPane gridPane;
-
-    @FXML
     private Button editButton;
 
     @FXML
@@ -59,23 +55,23 @@ public class EditEmployeeController implements Initializable {
     }
 
     private void initializeEditButton() {
-        editButton.setOnAction(x -> {
+        editButton.setOnAction((x -> {
             Stage waitingPopup = popupFactory.createWaitingPopup("Connecting....");
             waitingPopup.show();
             Thread thread = new Thread(() -> {
-
                 EmployeeDto employeeDto = createEmployeeDto();
-                employeeRestClient.saveEmployee(employeeDto, ()->
-                        Platform.runLater(()->{
+                employeeRestClient.saveEmployee(employeeDto, () -> {
+                        Platform.runLater(() -> {
                             waitingPopup.close();
                             Stage infoPopup = popupFactory.createInfoPopup("Employee is updated", () -> {
                                 getStage().close();
                             });
                             infoPopup.show();
-                        }));
+                        });
+                });
             });
             thread.start();
-        });
+        }));
     }
 
     private EmployeeDto createEmployeeDto() {
@@ -101,6 +97,7 @@ public class EditEmployeeController implements Initializable {
                 employeeLoadedHandler.handle();
             });
         });
+        thread.start();
     }
 
     private void initializeCancelButton() {

@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.dto.EmployeeDto;
 import sample.handler.EmployeeLoadedHandler;
@@ -19,9 +18,10 @@ public class ViewEmployeeController implements Initializable {
 
     private final EmployeeRestClient employeeRestClient;
 
-    public ViewEmployeeController(){
+    public ViewEmployeeController() {
         employeeRestClient = new EmployeeRestClient();
     }
+
     @FXML
     private BorderPane viewEmployeeBorderPane;
 
@@ -34,8 +34,6 @@ public class ViewEmployeeController implements Initializable {
     @FXML
     private TextField salaryTextField;
 
-    @FXML
-    private GridPane gridPane;
 
     @FXML
     private Button okButton;
@@ -48,26 +46,26 @@ public class ViewEmployeeController implements Initializable {
         initializeOKButton();
     }
 
-    public void loadEmployeeData(Long idEmployee, EmployeeLoadedHandler employeeLoadedHandler){
-        Thread thread = new Thread(()->{
+    public void loadEmployeeData(Long idEmployee, EmployeeLoadedHandler employeeLoadedHandler) {
+        Thread thread = new Thread(() -> {
             EmployeeDto dto = employeeRestClient.getEmployee(idEmployee);
-            Platform.runLater(()-> {
+            Platform.runLater(() -> {
                 firstNameTextField.setText(dto.getFirstName());
                 lastNameTextField.setText(dto.getLastName());
                 salaryTextField.setText(dto.getSalary());
                 employeeLoadedHandler.handle();
             });
         });
-
         thread.start();
     }
 
     private void initializeOKButton() {
-        okButton.setOnAction(x->
-                getStage().close());
+        okButton.setOnAction(x -> {
+            getStage().close();
+        });
     }
 
-    private Stage getStage(){
+    private Stage getStage() {
         return (Stage) viewEmployeeBorderPane.getScene().getWindow();
-     }
+    }
 }

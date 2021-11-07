@@ -1,0 +1,14 @@
+
+.warehouse-button{
+    -fx-text-fill: -fx-primary-blue;
+    -fx-background-color: -fx-primary-background;
+    -fx-border-color: -fx-primary-blue;
+    -fx-background-radius: 0;
+}
+
+.warehouse-button:hover{
+    -fx-text-fill: -fx-primary-blue;
+    -fx-background-color: -fx-secondary-background;
+    -fx-border-color: -fx-primary-blue;
+    -fx-background-radius: 0;
+}
