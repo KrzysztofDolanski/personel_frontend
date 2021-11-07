@@ -9,4 +9,6 @@ public class OperatorAuthenticationResultDto {
     private String firstName;
     private String lastName;
     private boolean authenticated;
+
+
 }
