@@ -12,3 +12,8 @@
     -fx-border-color: -fx-primary-blue;
     -fx-background-radius: 0;
 }
+
+.warehouse-label{
+    -fx-font-size: 15px;
+    -fx-text-fill: -fx-primary-blue;
+}
