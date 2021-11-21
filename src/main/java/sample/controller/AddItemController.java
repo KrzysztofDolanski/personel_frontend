@@ -64,7 +64,7 @@ public class AddItemController implements Initializable {
             Double doubleQuantity = Double.parseDouble(quantityTextField.getText());
             Long idQuantityType = quantityTypeComboBox.getSelectionModel().getSelectedItem().getIdQuantityType();
             Long idWarehouse = selectedWarehouseDto.getIdWarehouse();
-            ItemSaveDto dto = new ItemSaveDto(name, doubleQuantity, idQuantityType, idWarehouse);
+            ItemSaveDto dto = new ItemSaveDto(null, name, doubleQuantity, idQuantityType, idWarehouse);
             Thread thread = new Thread(()->{
                 itemRestClient.saveItem(dto, ()->{
                     Platform.runLater(()->{
