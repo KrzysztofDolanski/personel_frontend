@@ -1,5 +1,7 @@
 package sample.controller;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -7,14 +9,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.springframework.ui.context.Theme;
 import sample.dto.ItemSaveDto;
 import sample.dto.QuantityTypeDto;
 import sample.dto.WarehouseDto;
-import sample.handler.ProcessFinishHandler;
 import sample.rest.ItemRestClient;
 import sample.rest.QuantityTypeRestClient;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddItemController implements Initializable {
@@ -64,11 +67,24 @@ public class AddItemController implements Initializable {
             ItemSaveDto dto = new ItemSaveDto(name, doubleQuantity, idQuantityType, idWarehouse);
             Thread thread = new Thread(()->{
                 itemRestClient.saveItem(dto, ()->{
+                    Platform.runLater(()->{
                     getStage().close();
+                    });
                 });
             });
-
+            thread.start();
         });
+    }
+
+
+    public void loadQuantityTypes(){
+        Thread thread = new Thread(()->{
+            List<QuantityTypeDto> quantityTypes = quantityTypeRestClient.getQuantityTypes();
+            Platform.runLater(()->{
+                quantityTypeComboBox.setItems(FXCollections.observableArrayList(quantityTypes));
+            });
+        });
+        thread.start();
     }
 
     private void initializeCancelButton() {
@@ -81,5 +97,8 @@ public class AddItemController implements Initializable {
         return (Stage) addItemBorderPane.getScene().getWindow();
     }
 
+    public void setWarehouseDto(WarehouseDto selectedWarehouseDto) {
+        this.selectedWarehouseDto = selectedWarehouseDto;
+    }
 }
 

@@ -4,20 +4,25 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import sample.dto.ItemDto;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import sample.dto.WarehouseDto;
 import sample.dto.WarehouseModuleDto;
 import sample.rest.ItemRestClient;
 import sample.rest.WarehouseRestClient;
 import sample.table.ItemTableModel;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,6 +31,8 @@ import java.util.stream.Collectors;
 public class WarehouseController implements Initializable {
 
 
+    private static final String ADD_ITEM_FXML = "/fxml/add-item.fxml";
+    private static final String VIEW_ITEM_FXML = "/fxml/view-item.fxml";
     @FXML
     private BorderPane warehouseBorderPane;
 
@@ -33,13 +40,13 @@ public class WarehouseController implements Initializable {
     private Button addButton;
 
     @FXML
-    private Button ViewButton;
+    private Button viewButton;
 
     @FXML
-    private Button EditButton;
+    private Button editButton;
 
     @FXML
-    private Button DeleteButton;
+    private Button deleteButton;
 
     @FXML
     private Button refreshButton;
@@ -67,6 +74,54 @@ public class WarehouseController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initializeCombobox();
         initializeTableView();
+        initializeAddItemButton();
+        initializeViewItemButton();
+    }
+
+    private void initializeAddItemButton() {
+        addButton.setOnAction(x->{
+            try {
+                Stage stage = createItemCrudStage();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(ADD_ITEM_FXML));
+                Scene scene = new Scene(loader.load(), 500, 400);
+                stage.setScene(scene);
+                AddItemController controller = loader.getController();
+                WarehouseDto selectedWarehouseDto = warehouseComboBox.getSelectionModel().getSelectedItem();
+                controller.setWarehouseDto(selectedWarehouseDto);
+                controller.loadQuantityTypes();
+                stage.show();
+            } catch (IOException e) {
+                System.out.println("Something wrong in initializeAddItemButton");
+            }
+        });
+    }
+
+
+    private void initializeViewItemButton() {
+        viewButton.setOnAction(x->{
+            ItemTableModel selectedItem = warehouseTableView.getSelectionModel().getSelectedItem();
+            if (selectedItem==null){
+                return;
+            }
+            try {
+            Stage stage = createItemCrudStage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(VIEW_ITEM_FXML));
+                Scene scene = new Scene(loader.load(), 500, 400);
+                stage.setScene(scene);
+                ViewItemController controller = loader.getController();
+                controller.loadItemData(selectedItem.getIdItem());
+                stage.show();
+            } catch (IOException e) {
+                System.out.println("Something wrong in initializeAddItemButton");
+            }
+        });
+    }
+
+    private Stage createItemCrudStage() {
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        return stage;
     }
 
     private void initializeCombobox() {

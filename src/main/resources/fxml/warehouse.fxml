@@ -15,9 +15,9 @@
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1024.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="addButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="warehouse-button" text="Add" />
-            <Button fx:id="ViewButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="warehouse-button" text="View" />
-            <Button fx:id="EditButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="warehouse-button" text="Edit" />
-            <Button fx:id="DeleteButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="warehouse-button" text="Delete" />
+            <Button fx:id="viewButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="warehouse-button" text="View" />
+            <Button fx:id="editButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="warehouse-button" text="Edit" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="warehouse-button" text="Delete" />
             <Button fx:id="refreshButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="warehouse-button" text="Refresh" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <Label styleClass="warehouse-label" stylesheets="@../css/warehouse.css" text="selected warehouse" />
